@@ -1,0 +1,10 @@
+#### 安装
+
+安装python3
+
+https://www.python.org/downloads/windows/
+
+然后进入这个目录， 执行  pip install -r requirements.txt   安装python依赖文件。
+
+
+然后执行命令  python  main.py
