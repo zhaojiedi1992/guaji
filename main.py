@@ -136,8 +136,8 @@ class ForeverMemoryClient:
         if self.nongzuowei == "nangua":
             self.goto_nangua()
             time.sleep(10)
-            self.open_nangua()
-            time.sleep(1)
+            # self.open_nangua()
+            # time.sleep(1)
             pass
         elif self.nongzuowei == "xrz":
             self.goto_xrz()
@@ -183,6 +183,13 @@ class ForeverMemoryClient:
         pos = self.while_get_pic('shengcun.png', cnt=5, confidence=0.85, desc="shengcun-server", region=None)
         self.screenshot("login_into_shengcun")
         self.click_pos(pos, "shengcun-server", 2)
+        time.sleep(0.2)
+
+    def goto_area_0(self):
+        pyautogui.write('/bs', interval=self.default_input_interval)
+        pyautogui.press('enter')
+        pos = self.while_get_pic('zhucheng.png', cnt=2, confidence=0.82, desc="zhucheng",region=None)
+        self.click_pos(pos, "zhucheng", 1)
         time.sleep(0.2)
 
     def goto_area_2(self):
@@ -244,9 +251,9 @@ class ForeverMemoryClient:
         while True:
             pos = self.while_get_pic(pic_file, cnt=1, confidence=confidence, desc=desc, region=None)
             if pos is not None:
-                return True
+                return True,pos
             if current_sleep_seconds > max_sleep_seconds:
-                return False
+                return False,None
             time.sleep(sleep_interval)
 
     def open(self,user):
@@ -270,17 +277,19 @@ class ForeverMemoryClient:
             if pos2 is not None:
                 self.click_pos(pos2, desc="mem", click_cnt=2)
                 break
-            time.sleep(1)
+            time.sleep(0.3)
             cnt+=1
 
-        self.sleep_while(0.5, 30, pic_file='mem.png', confidence=0.9, desc="duoren")
-        pos3 = self.while_get_pic('mem.png', cnt=1, confidence=0.9, desc="duoren", region=None)
-        if pos3 is not None:
-            self.click_pos(pos3, desc="mem", click_cnt=2)
+        has,pos3=self.sleep_while(0.5, 30, pic_file='mem.png', confidence=0.9, desc="duoren")
+        if has:
+        # pos3 = self.while_get_pic('mem.png', cnt=1, confidence=0.9, desc="duoren", region=None)
+            if pos3 is not None:
+                self.click_pos(pos3, desc="mem", click_cnt=2)
 
-        self.sleep_while(0.5, 30, pic_file='wanjiaxitong.png', confidence=0.9, desc="xin")
-        pos = self.while_get_pic('wanjiaxitong.png', cnt=1, confidence=0.9, desc="xin", region=None)
-        if pos is not None:
+        has ,pos=self.sleep_while(0.5, 30, pic_file='wanjiaxitong.png', confidence=0.9, desc="xin")
+        if has:
+            # pos = self.while_get_pic('wanjiaxitong.png', cnt=1, confidence=0.9, desc="xin", region=None)
+            # if pos is not None:
             print("get xin")
 
         pyautogui.hotkey('ctrl', 'command', 'f')
