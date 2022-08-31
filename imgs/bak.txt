@@ -1,0 +1,56 @@
+
+    def set_proxy(self,ip ,port):
+        # networksetup -setwebproxy Wi-Fi 1.1.1.1 1111
+        # networksetup -setsecurewebproxy
+        # networksetup -setsocksfirewallproxy
+        cmd1= "networksetup -setwebproxy Wi-Fi " + ip +" " + str(port)
+        cmd2 = "networksetup -setsecurewebproxy Wi-Fi " + ip + " " + str(port)
+        cmd3 = "networksetup -setsocksfirewallproxy Wi-Fi " + ip + " " + str(port)
+        cmd4= "networksetup -setstreamingproxy Wi-Fi " + ip + " " + str(port)
+        print(cmd1)
+        print(cmd2)
+        print(cmd3)
+        print(cmd4)
+        os.system(cmd1)
+        os.system(cmd2)
+        os.system(cmd3)
+        os.system(cmd4)
+        time.sleep(0.2)
+
+        pass
+    def close_proxy(self):
+        cmd1= "networksetup -setwebproxystate Wi-Fi off"
+        cmd2 = "networksetup -setsecurewebproxystate Wi-Fi off"
+        cmd3 = "networksetup -setsocksfirewallproxystate Wi-Fi off"
+        cmd4 = "networksetup -setstreamingproxystate Wi-Fi off"
+        os.system(cmd1)
+        os.system(cmd2)
+        os.system(cmd3)
+    def generate_users(self):
+        user_list=[]
+        xing_list=["李","王","张","刘","陈","杨","赵","黄","周","吴"]
+        name_list=[
+            "欣可",
+            "姈",
+            "韶华",
+            "隽秀",
+            "韶容",
+            "千叶",
+            "宝云",
+            "耿节",
+            "华月",
+            "含娇",
+            "姣艳",
+            "鹤梦",
+            "朴诚",
+            "婉静",
+            "新语",
+        ]
+        p = Pinyin()
+        for xing in xing_list:
+            for name in name_list:
+                username = xing+name
+                username_en = p.get_pinyin(username, '')
+                user_list.append(username_en)
+        for user in user_list:
+            print(user)
