@@ -54,3 +54,66 @@
                 user_list.append(username_en)
         for user in user_list:
             print(user)
+
+
+         def run_v3(self):
+
+        start_message = "start,with first_start_delay={}".format(self.first_start_delay)
+        print(start_message)
+        self.log(start_message)
+        self.prepare_works()
+        while True:
+            try:
+                pos = self.while_get_pic("nongzuowu.png", 5, 0.6, "nongzuowu", region=None)
+                if pos is None:
+                    time.sleep(60)
+                    self.prepare_works()
+                self.seal()
+                time.sleep(self.seal_interval)
+            except Exception as err:
+                self.log("error={}".format(err))
+
+
+
+
+    def prepare_works(self):
+        print("prepare_work")
+        self.pic_cnt = 0
+        # self.entry_server()
+        self.close()
+        self.open()
+        # time.sleep(20)
+        # self.login_hub()
+        time.sleep(2)
+        self.login_with_code()
+        # time.sleep(1)
+        self.choice_shengcun()
+        # time.sleep(1)
+        self.login_into_shengcun()
+        time.sleep(30)
+        if self.nongzuowei == "nangua":
+            self.goto_nangua()
+            time.sleep(10)
+            # self.open_nangua()
+            # time.sleep(1)
+            pass
+
+
+         def open_nangua(self):
+        self.exec_command('/bs sg200')
+        pyautogui.moveTo(100, 100)
+        time.sleep(0.3)
+
+        pos = self.while_get_pic('nangua.png', cnt=2, confidence=0.82, desc="nangua-seal-button", region=None)
+        self.click_pos(pos, "first-seal-nangua", 1)
+        self.log("pos={}".format(pos))
+        time.sleep(0.3)
+
+
+ # time.sleep(10)
+    # has, pos =cli.sleep_while(0.5, 20, pic_file='m.png', confidence=0.9, desc="instance")
+    # print(has,pos)
+    # pix = pyautogui.pixel(pos.x/2, pos.y/2)
+    # print(pix)
+    # pix = pyautogui.pixel(pos.x, pos.y)
+    # print(pix)
