@@ -81,6 +81,8 @@ class ForeverMemoryClient:
             pass
         time.sleep(1)
 
+    def clean_packet(self):
+        pass
     def run_v4(self):
         start_message = "start,with first_start_delay={}".format(self.first_start_delay)
         print(start_message)
@@ -90,7 +92,8 @@ class ForeverMemoryClient:
         self.open_pre()
         time.sleep(0.2)
         while True:
-            if self.start_user_index >=77:
+            if self.start_user_index >=81:
+                self.close_app()
                 exit(0)
             if self.start_user_index >= len(self.user_list):
                 self.start_user_index = 0
@@ -105,26 +108,51 @@ class ForeverMemoryClient:
             self.choice_shengcun()
             self.login_into_shengcun()
             self.sleep_while2(0.2, 40,self.fm_info)
+
+            # nangua
             self.goto_area_2()
             self.sleep_while2(0.2, 40,self.fm_info)
             self.goto_nangua()
+            #self.goto_xrz()
             # self.goto_nangua_ext()
             self.sleep_while2(0.2, 40,self.fm_info)
             self.goto_area_0_ext()
             self.sleep_while2(0.2, 40,self.fm_info)
             time.sleep(1)
-            self.seal()
+            self.seal_nangua()
             time.sleep(0.8)
+
+            # # xrz
+            # self.goto_area_2()
+            # self.sleep_while2(0.2, 40,self.fm_info,0)
+            # self.goto_xrz()
+            # self.sleep_while2(0.2, 40,self.fm_info)
+            # self.goto_area_0_ext()
+            # self.sleep_while2(0.2, 40,self.fm_info)
+            # time.sleep(1)
+            # self.seal_xrz()
+            # time.sleep(0.8)
+
             self.pay_money()
             self.start_user_index += 1
             self.update_index()
             self.quit()
 
-    def seal(self):
+    def seal_nangua(self):
         pyautogui.rightClick()
         time.sleep(2)
         pos = self.while_get_pic("nangua.png", 5, 0.6, "nangua", region=None)
         self.click_pos(pos, desc="nangua", click_cnt=0)
+        time.sleep(0.5)
+        pyautogui.press("f")
+        time.sleep(1.2)
+        pyautogui.press("esc")
+        time.sleep(0.2)
+    def seal_xrz(self):
+        pyautogui.rightClick()
+        time.sleep(2)
+        pos = self.while_get_pic("xrz.png", 5, 0.6, "xrz", region=None)
+        self.click_pos(pos, desc="xrz", click_cnt=0)
         time.sleep(0.5)
         pyautogui.press("f")
         time.sleep(1.2)
@@ -180,7 +208,7 @@ class ForeverMemoryClient:
 
     def goto_area_2(self):
         self.exec_command('/bs')
-        pos = self.while_get_pic('erqu.png', cnt=2, confidence=0.82, desc="xrz-seal-button", region=None)
+        pos = self.while_get_pic('erqu.png', cnt=2, confidence=0.82, desc="erqu", region=None)
         self.click_pos(pos, "erqu", 1)
         time.sleep(0.2)
 
@@ -189,8 +217,13 @@ class ForeverMemoryClient:
         time.sleep(35)
         self.exec_command('/sethome h2')
 
+
     def goto_nangua_ext(self):
         self.exec_command('/home h2')
+
+    def goto_xrz(self):
+        self.exec_command('/res tp panda_xrz')
+        time.sleep(20)
 
     def close_app(self):
         cmd1 = """ ps aux |grep MultiMC.app |grep -v grep  |grep MultiMC.app |awk '{print $2}' |while read pid ; do kill -9 $pid  ; done """
@@ -199,7 +232,7 @@ class ForeverMemoryClient:
 
     def quit(self):
         pyautogui.press("esc")
-        pos_duankai = self.while_get_pic('duankai.png', cnt=2, confidence=0.9, desc="instance", region=None)
+        pos_duankai = self.while_get_pic('duankai.png', cnt=2, confidence=0.75, desc="instance", region=None)
         self.click_pos(pos_duankai, "new", 1)
         time.sleep(3)
 
@@ -225,12 +258,12 @@ class ForeverMemoryClient:
         max_cnt = 120
         cnt = 0
         while cnt < max_cnt:
-            pos1 = self.while_get_pic('lixianbtn.png', cnt=1, confidence=0.9, desc="lixianbtn", region=None)
+            pos1 = self.while_get_pic('lixianbtn.png', cnt=1, confidence=0.7, desc="lixianbtn", region=None)
             if pos1 is not None:
                 pyautogui.write("mc__panda")
                 pyautogui.press("enter")
                 time.sleep(1)
-            pos2 = self.while_get_pic('duoren.png', cnt=1, confidence=0.9, desc="duoren", region=None)
+            pos2 = self.while_get_pic('duoren.png', cnt=1, confidence=0.7, desc="duoren", region=None)
             if pos2 is not None:
                 self.click_pos(pos2, desc="duoren", click_cnt=2)
                 break
@@ -255,15 +288,15 @@ class ForeverMemoryClient:
         self.click_pos(pos_hongxian, "proxy", 1)
         time.sleep(0.2)
 
-        pos_crack = self.while_get_pic('crack.png', cnt=3, confidence=0.9, desc="crack", region=None)
+        pos_crack = self.while_get_pic('crack.png', cnt=3, confidence=0.8, desc="crack", region=None)
         self.click_pos(pos_crack, "crack", 1)
         time.sleep(0.5)
         pyautogui.write(user)
         time.sleep(0.2)
-        pos_add = self.while_get_pic('add.png', cnt=2, confidence=0.9, desc="crack", region=None)
+        pos_add = self.while_get_pic('add.png', cnt=2, confidence=0.8, desc="add", region=None)
         self.click_pos(pos_add, "add", 1)
         time.sleep(8)
-        pos = self.while_get_pic('hongxian.png', cnt=2, confidence=0.9, desc="crack", region=None)
+        pos = self.while_get_pic('hongxian.png', cnt=2, confidence=0.75, desc="hongxian", region=None)
         if pos is None:
             self.need_quit = True
             return
@@ -306,7 +339,7 @@ class ForeverMemoryClient:
         if has:
             if pos3 is not None:
                 self.click_pos(pos3, desc="mem", click_cnt=2)
-        has, pos = self.sleep_while(0.5, 30, pic_file='xiaoxin.png', confidence=0.9, desc="xin")
+        has, pos = self.sleep_while(0.5, 30, pic_file='xiaoxin.png', confidence=0.7, desc="xin")
         #has, pos =self.sleep_while2(0.5, 20, self.xiaoxin_info)
         if has:
             print("get xin")
@@ -322,7 +355,7 @@ class ForeverMemoryClient:
         if has:
             if pos3 is not None:
                 self.click_pos(pos3, desc="mem", click_cnt=2)
-        has, pos = self.sleep_while(0.5, 30, pic_file='xiaoxin.png', confidence=0.9, desc="xin")
+        has, pos = self.sleep_while(0.5, 30, pic_file='xiaoxin.png', confidence=0.7, desc="xin")
         #has, pos =self.sleep_while2(0.5, 20, self.xiaoxin_info)
         if has:
             print("get xin")
@@ -412,8 +445,8 @@ class ForeverMemoryClient:
             return False
         return True
 
-    def sleep_while2(self, sleep_interval, max_sleep_seconds, info):
-        time.sleep(2)
+    def sleep_while2(self, sleep_interval, max_sleep_seconds, info,sleep_time=2):
+        time.sleep(sleep_time)
         current_sleep_seconds = 0
         while True:
             tp = self.color_math(info["x"], info["y"], info["r"], info["g"], info["b"])
@@ -429,21 +462,21 @@ if __name__ == '__main__':
     # cli.generate_users()
 
     #
-    while True:
-        try:
-            cli.register_users()
-        except Exception as e:
-            print(e)
-        time.sleep(10)
     # while True:
     #     try:
-    #         cli.need_quit=False
-    #         cli.run_v4()
+    #         cli.register_users()
     #     except Exception as e:
-    #         print("======================")
     #         print(e)
-    #         print("======================")
     #     time.sleep(10)
+    while True:
+        try:
+            cli.need_quit=False
+            cli.run_v4()
+        except Exception as e:
+            print("======================")
+            print(e)
+            print("======================")
+        time.sleep(10)
 
     # time.sleep(10)
     # has, pos =cli.sleep_while(0.5, 20, pic_file='xiaoxin2.png', confidence=0.9, desc="instance")
